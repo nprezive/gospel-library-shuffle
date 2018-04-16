@@ -1,7 +1,6 @@
 package com.example.npreszler.gospel_library_shuffle;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -76,7 +77,12 @@ public class FragmentMediaList extends Fragment {
         btnShuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onShuffleClicked();
+                ArrayList<MediaPiece> selectedMediaPieces = new ArrayList<>();
+                for (int i : mListener.getSelectedMediaPiecesIndices()) {
+                    selectedMediaPieces.add(mediaPieces.get(i));
+                }
+                Collections.shuffle(selectedMediaPieces);
+                mListener.onShuffleClicked(selectedMediaPieces);
             }
         });
 
@@ -102,6 +108,7 @@ public class FragmentMediaList extends Fragment {
 
     public interface OnFragmentMediaListInteractionListener {
         void onMediaPieceClicked(int i);
-        void onShuffleClicked();
+        void onShuffleClicked(List<MediaPiece> selectedMediaPieces);
+        HashSet<Integer> getSelectedMediaPiecesIndices();
     }
 }

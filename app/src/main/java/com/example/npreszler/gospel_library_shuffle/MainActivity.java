@@ -1,23 +1,25 @@
 package com.example.npreszler.gospel_library_shuffle;
 
+import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-            implements FragmentMediaList.OnFragmentMediaListInteractionListener {
+            implements FragmentMediaList.OnFragmentMediaListInteractionListener,
+                        FragmentMediaPlayer.OnFragmentMediaPlayerInteractionListener {
 
     FragmentManager fm;
     private static final int RC_SIGN_IN = 123;
-    public HashSet<Integer> selectedMediaPieces = new HashSet<>();
+    public HashSet<Integer> selectedMediaPiecesIndices = new HashSet<>();
+    public ArrayList<MediaPiece> playlist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +82,31 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMediaPieceClicked(int i) {
-        if (selectedMediaPieces.contains(i)) {
-            selectedMediaPieces.remove(i);
+        if (selectedMediaPiecesIndices.contains(i)) {
+            selectedMediaPiecesIndices.remove(i);
         }
         else {
-            selectedMediaPieces.add(i);
+            selectedMediaPiecesIndices.add(i);
         }
     }
 
     @Override
-    public void onShuffleClicked() {
-        Log.d("test", "shuffle the following: " + selectedMediaPieces.toString());
+    public void onShuffleClicked(List<MediaPiece> selectedMediaPieces) {
+        playlist = (ArrayList<MediaPiece>) selectedMediaPieces;
+        fm.beginTransaction()
+//                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .replace(R.id.frameMainActivity, new FragmentMediaPlayer(), "fragMediaPlayer")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public HashSet<Integer> getSelectedMediaPiecesIndices() {
+        return selectedMediaPiecesIndices;
+    }
+
+    @Override
+    public List<MediaPiece> getPlaylist() {
+        return playlist;
     }
 }
