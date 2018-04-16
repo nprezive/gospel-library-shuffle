@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">gospel-library-shuffle</string>
+    <string name="load_data">load data</string>
 </resources>
