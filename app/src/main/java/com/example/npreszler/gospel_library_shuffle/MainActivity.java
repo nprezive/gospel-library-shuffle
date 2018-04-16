@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+            implements FragmentMediaList.OnFragmentMediaListInteractionListener {
 
     private static final int RC_SIGN_IN = 123;
     private DatabaseReference mDatabaseRef;
