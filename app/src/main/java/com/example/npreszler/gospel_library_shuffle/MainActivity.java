@@ -1,6 +1,5 @@
 package com.example.npreszler.gospel_library_shuffle;
 
-import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.media.AudioManager;
@@ -10,26 +9,15 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity
             implements FragmentMediaList.OnFragmentMediaListInteractionListener {
 
     FragmentManager fm;
     private static final int RC_SIGN_IN = 123;
+    public HashSet<Integer> selectedMediaPieces = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +28,6 @@ public class MainActivity extends AppCompatActivity
         fm.beginTransaction()
                 .replace(R.id.frameMainActivity, new FragmentMediaList(), "fragMediaList")
                 .commit();
-
 
 
         // test - play stream
@@ -92,7 +79,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-        Log.d("test", "onFragmentInteraction happened");
+    public void onMediaPieceClicked(int i) {
+        if (selectedMediaPieces.contains(i)) {
+            selectedMediaPieces.remove(i);
+        }
+        else {
+            selectedMediaPieces.add(i);
+        }
+    }
+
+    @Override
+    public void onShuffleClicked() {
+        Log.d("test", "shuffle the following: " + selectedMediaPieces.toString());
     }
 }
