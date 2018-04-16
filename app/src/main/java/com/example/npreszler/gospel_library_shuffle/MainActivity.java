@@ -1,5 +1,7 @@
 package com.example.npreszler.gospel_library_shuffle;
 
+import android.net.Uri;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -26,53 +28,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
             implements FragmentMediaList.OnFragmentMediaListInteractionListener {
 
+    FragmentManager fm;
     private static final int RC_SIGN_IN = 123;
-    private DatabaseReference mDatabaseRef;
-    private ArrayList<MediaPiece> mediaPieces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDatabaseRef = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("mediaPieces");
-
-        Button loadData = (Button) findViewById(R.id.btnLoadData);
-
-        mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mediaPieces = new ArrayList<MediaPiece>();
-                for (DataSnapshot mediaPieceSnapshot : dataSnapshot.getChildren()) {
-//                    Log.d("test", mediaPieceSnapshot.getValue().toString());
-                    MediaPiece mediaPiece = mediaPieceSnapshot.getValue(MediaPiece.class);
-                    Log.d("test", mediaPiece.toString());
-                    mediaPieces.add(mediaPiece);
-                }
-
-                if(mediaPieces == null) {
-                    Log.d("test", "mediaPieces is null");
-                }
-                else {
-                    Log.d("test", mediaPieces.toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting data failed, log a message
-                Log.w("test", "onCanceled failed", databaseError.toException());
-            }
-        });
-
-
-
-
-
-
-
+        fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.frameMainActivity, new FragmentMediaList(), "fragMediaList")
+                .commit();
 
 
 
@@ -122,5 +89,10 @@ public class MainActivity extends AppCompatActivity
 
         }
         return false;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        Log.d("test", "onFragmentInteraction happened");
     }
 }

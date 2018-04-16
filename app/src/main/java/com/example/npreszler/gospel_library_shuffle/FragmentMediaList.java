@@ -4,10 +4,21 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,11 +30,13 @@ import android.view.ViewGroup;
 public class FragmentMediaList extends Fragment {
 
     private OnFragmentMediaListInteractionListener mListener;
+    private MediaListRecyclerAdapter adapter;
+    private DatabaseReference mDatabaseRef;
+    private List<MediaPiece> mediaPieces;
 
     public FragmentMediaList() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,15 +45,35 @@ public class FragmentMediaList extends Fragment {
         View view = inflater.inflate(R.layout.fragment_media_list, container, false);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvMediaPieces);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new MediaListRecyclerAdapter(new ArrayList<MediaPiece>(), mListener);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+
+        mDatabaseRef = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("mediaPieces");
+        mDatabaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mediaPieces = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    MediaPiece mediaPiece = snapshot.getValue(MediaPiece.class);
+                    mediaPieces.add(mediaPiece);
+                }
+                adapter.addItems(mediaPieces);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+//                throw databaseError.toException();
+                Log.w("test", "onCanceled failed", databaseError.toException());
+            }
+        });
+
+
 
         return view;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override

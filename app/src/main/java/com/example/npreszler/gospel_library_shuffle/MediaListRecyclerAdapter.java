@@ -1,6 +1,7 @@
 package com.example.npreszler.gospel_library_shuffle;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class MediaListRecyclerAdapter
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final MediaPiece mediaPiece = mediaPieces.get(position);
         if (mediaPiece != null) {
             holder.mediaPiece = mediaPiece;
@@ -38,7 +39,7 @@ public class MediaListRecyclerAdapter
                 @Override
                 public void onClick(View v) {
                     if (mCallback != null) {
-
+                        Log.d("test", holder.mediaPiece.toString() + " was clicked.");
                     }
                 }
             });
@@ -48,6 +49,12 @@ public class MediaListRecyclerAdapter
     @Override
     public int getItemCount() {
         return mediaPieces.size();
+    }
+
+    public void addItems(List<MediaPiece> items) {
+        mediaPieces.clear();
+        mediaPieces.addAll(items);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
