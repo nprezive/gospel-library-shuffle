@@ -32,6 +32,7 @@ public class FragmentMediaPlayer extends Fragment {
     private boolean isPreparing;
     private TextView txvMarquee;
     private SeekBar seekBar;
+    ImageButton btnPlayPause;
 
     public FragmentMediaPlayer() {
         // Required empty public constructor
@@ -44,8 +45,8 @@ public class FragmentMediaPlayer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_media_player, container, false);
 
         txvMarquee = view.findViewById(R.id.txvMarquee);
-        seekBar = view.findViewById(R.id.sbProgresBar);
-        ImageButton btnPlayPause = view.findViewById(R.id.btnPlayPause);
+        seekBar = view.findViewById(R.id.sbProgressBar);
+        btnPlayPause = view.findViewById(R.id.btnPlayPause);
         ImageButton btnPrev = view.findViewById(R.id.btnPrev);
         ImageButton btnNext = view.findViewById(R.id.btnNext);
 
@@ -113,9 +114,11 @@ public class FragmentMediaPlayer extends Fragment {
 
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
+            btnPlayPause.setImageResource(R.drawable.ic_pause_white_24dp);
         }
         else {
             mediaPlayer.pause();
+            btnPlayPause.setImageResource(R.drawable.ic_play_arrow_white_24dp);
         }
     }
 

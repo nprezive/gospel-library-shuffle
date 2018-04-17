@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,6 +78,11 @@ public class FragmentMediaList extends Fragment {
         btnShuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mListener.getSelectedMediaPiecesIndices().isEmpty()) {
+                    Toast.makeText(getContext(), "Please select some media",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 ArrayList<MediaPiece> selectedMediaPieces = new ArrayList<>();
                 for (int i : mListener.getSelectedMediaPiecesIndices()) {
                     selectedMediaPieces.add(mediaPieces.get(i));

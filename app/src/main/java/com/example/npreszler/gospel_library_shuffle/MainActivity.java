@@ -1,10 +1,6 @@
 package com.example.npreszler.gospel_library_shuffle;
 
-import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -32,24 +28,6 @@ public class MainActivity extends AppCompatActivity
                 .commit();
 
 
-        // test - play stream
-//        loadData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String url = "http://media2.ldscdn.org/assets/scriptures/the-old-testament/2015-11-5010-psalm-023-male-voice-64k-eng.mp3";
-//                MediaPlayer mediaPlayer = new MediaPlayer();
-//                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//                try {
-//                    mediaPlayer.setDataSource(url);
-//                    mediaPlayer.prepare();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                mediaPlayer.start();
-//            }
-//        });
-
-
 
 //        // Choose authentication providers
 //        List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -64,21 +42,21 @@ public class MainActivity extends AppCompatActivity
 //                RC_SIGN_IN);
     }
 
-    public boolean isConnectedToInternet(){
-        ConnectivityManager connectivity = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
-        {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null)
-                for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
-                        return true;
-                    }
-
-        }
-        return false;
-    }
+//    public boolean isConnectedToInternet(){
+//        ConnectivityManager connectivity = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//        if (connectivity != null)
+//        {
+//            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+//            if (info != null)
+//                for (int i = 0; i < info.length; i++)
+//                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
+//                    {
+//                        return true;
+//                    }
+//
+//        }
+//        return false;
+//    }
 
     @Override
     public void onMediaPieceClicked(int i) {
