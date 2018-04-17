@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1032043830315",
+    "firebase_url": "https://gospellibraryshuffle.firebaseio.com",
+    "project_id": "gospellibraryshuffle",
+    "storage_bucket": "gospellibraryshuffle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032043830315:android:7b6fef529a83774c",
+        "android_client_info": {
+          "package_name": "com.example.npreszler.gospel_library_shuffle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032043830315-14rh1p4hf1s6uj5jc1081ca6kde3mumq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.npreszler.gospel_library_shuffle",
+            "certificate_hash": "38f2f7445016cf7640417bc9152d17c4d7877a5f"
+          }
+        },
+        {
+          "client_id": "1032043830315-gh29s6hhsrmrc53dph0d1lu74p5ip5q7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXamOKzyPWax0VSFR9PIbfoBt-pXD9nB8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032043830315-gh29s6hhsrmrc53dph0d1lu74p5ip5q7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
